@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>You, Me & What's Next</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #07111f;
+            color: white;
+            line-height: 1.6;
+        }
+
+        /* NAVBAR */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 65px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 7%;
+
+            background: rgba(7, 17, 31, 0.92);
+            backdrop-filter: blur(12px);
+
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+
+            z-index: 999;
+        }
+
+        .logo {
+            font-size: 17px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        nav .links {
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+            opacity: 0.7;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 1;
+        }
+
+        /* GENERAL */
+        section {
+            padding: 100px 7%;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1150px;
+            margin: auto;
+        }
+
+        .label {
+            color: #6f9fd0;
+            font-size: 12px;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .section-title {
+            font-size: 40px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .section-description {
+            max-width: 650px;
+            color: #9eacbd;
+            margin-bottom: 40px;
+        }
+
+        /* HERO */
+        #home {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 130px;
+        }
+
+        .hero-content {
+            max-width: 850px;
+        }
+
+        .hero-title {
+            font-size: clamp(48px, 8vw, 95px);
+            line-height: 0.92;
+            letter-spacing: -3px;
+            margin-bottom: 30px;
+        }
+
+        .hero-description {
+            max-width: 600px;
+            color: #aab6c5;
+            font-size: 17px;
+            margin-bottom: 35px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 13px 24px;
+
+            color: white;
+            text-decoration: none;
+
+            border: 1px solid #426b99;
+            border-radius: 30px;
+
+            transition: 0.3s;
+        }
+
+        .button:hover {
+            background: #426b99;
+        }
+
+        /* ABOUT */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 55px;
+            align-items: center;
+        }
+
+        .main-photo {
+            width: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            background: #101c2c;
+        }
+
+        .main-photo img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        .about-content p {
+            color: #aab6c5;
+            margin-bottom: 18px;
+        }
+
+        /* GALLERY */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .photo-card {
+            background: #0c1929;
+            border-radius: 17px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.06);
+
+            cursor: pointer;
+
+            transition:
+                transform 0.3s ease,
+                border-color 0.3s ease;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(111,159,208,0.4);
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 300px;
+            display: block;
+
+            object-fit: cover;
+
+            transition: transform 0.5s ease;
+        }
+
+        .photo-card:hover img {
+            transform: scale(1.04);
+        }
+
+        /* LOADING */
+        .loading {
+            text-align: center;
+            padding: 50px 20px;
+            color: #9eacbd;
+        }
+
+        .error {
+            text-align: center;
+            padding: 40px 20px;
+            color: #9eacbd;
+        }
+
+        /* MILESTONE */
+        .milestone {
+            text-align: center;
+            padding-top: 130px;
+            padding-bottom: 130px;
+        }
+
+        .date {
+            font-size: clamp(50px, 10vw, 105px);
+            font-weight: bold;
+            letter-spacing: -3px;
+            margin: 20px 0;
+        }
+
+        .milestone-description {
+            color: #9eacbd;
+        }
+
+        /* FUTURE */
+        .future {
+            text-align: center;
+        }
+
+        .future-title {
+            font-size: clamp(40px, 7vw, 75px);
+            line-height: 1;
+            margin-bottom: 25px;
+        }
+
+        .future-description {
+            max-width: 600px;
+            margin: auto;
+            color: #9eacbd;
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 30px 7%;
+            text-align: center;
+
+            border-top: 1px solid rgba(255,255,255,0.07);
+
+            color: #657487;
+            font-size: 12px;
+        }
+
+        /* LIGHTBOX */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+
+            background: rgba(0,0,0,0.92);
+
+            display: none;
+            align-items: center;
+            justify-content: center;
+
+            padding: 30px;
+
+            z-index: 2000;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 95%;
+            max-height: 90vh;
+
+            object-fit: contain;
+
+            border-radius: 10px;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+
+            font-size: 35px;
+            color: white;
+
+            cursor: pointer;
+        }
+
+        /* TABLET */
+        @media (max-width: 800px) {
+
+            section {
+                padding: 85px 5%;
+            }
+
+            nav {
+                padding: 0 5%;
+            }
+
+            nav .links {
+                gap: 14px;
+            }
+
+            nav a {
+                font-size: 11px;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 35px;
+            }
+
+            .gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .photo-card img {
+                height: 250px;
+            }
+        }
+
+        /* PHONE */
+        @media (max-width: 520px) {
+
+            nav {
+                height: 58px;
+            }
+
+            .logo {
+                font-size: 13px;
+            }
+
+            nav .links {
+                gap: 9px;
+            }
+
+            nav a {
+                font-size: 9px;
+            }
+
+            section {
+                padding: 75px 5%;
+            }
+
+            #home {
+                min-height: 90vh;
+                padding-top: 100px;
+            }
+
+            .hero-title {
+                font-size: 46px;
+                letter-spacing: -2px;
+            }
+
+            .hero-description {
+                font-size: 15px;
+            }
+
+            .section-title {
+                font-size: 31px;
+            }
+
+            .gallery {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .photo-card {
+                border-radius: 12px;
+            }
+
+            .photo-card img {
+                height: 180px;
+            }
+
+            .date {
+                font-size: 53px;
+            }
+
+            .future-title {
+                font-size: 43px;
+            }
+
+            .lightbox {
+                padding: 15px;
+            }
+
+            .lightbox img {
+                max-width: 100%;
+                max-height: 85vh;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav>
+        <div class="logo">
+            YOU & ME
+        </div>
+
+        <div class="links">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#memories">Memories</a>
+            <a href="#future">Future</a>
+        </div>
+    </nav>
+
+
+    <!-- HOME -->
+    <section id="home">
+
+        <div class="container hero-content">
+
+            <div class="label">
+                OUR LITTLE STORY
+            </div>
+
+            <h1 class="hero-title">
+                YOU, ME<br>
+                & WHAT'S NEXT.
+            </h1>
+
+            <p class="hero-description">
+                Dulu kita cuma dua orang yang kebetulan sering bertemu.
+                Sekarang, kita punya cerita yang layak untuk diingat.
+            </p>
+
+            <a href="#about" class="button">
+                Lihat cerita kita
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- ABOUT -->
+    <section id="about">
+
+        <div class="container">
+
+            <div class="about-grid">
+
+                <div class="main-photo">
+
+                    <img
+                        id="mainPhoto"
+                        src=""
+                        alt="Foto utama"
+                    >
+
+                </div>
+
+
+                <div class="about-content">
+
+                    <div class="label">
+                        ABOUT US
+                    </div>
+
+                    <h2 class="section-title">
+                        Tentang kita.
+                    </h2>
+
+                    <p>
+                        Kita mungkin tidak selalu punya hari yang sempurna,
+                        tapi setiap momen yang kita lewati bersama selalu
+                        punya cerita sendiri.
+                    </p>
+
+                    <p>
+                        Website kecil ini dibuat untuk menyimpan beberapa
+                        kenangan dan menjadi bagian kecil dari perjalanan kita.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- MEMORIES -->
+    <section id="memories">
+
+        <div class="container">
+
+            <div class="label">
+                OUR MEMORIES
+            </div>
+
+            <h2 class="section-title">
+                Semua momen kita.
+            </h2>
+
+            <p class="section-description">
+                Semua foto yang tersimpan dalam cerita kita.
+            </p>
+
+
+            <div id="gallery" class="gallery">
+
+                <div class="loading">
+                    Memuat semua foto...
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SPECIAL DATE -->
+    <section class="milestone">
+
+        <div class="container">
+
+            <div class="label">
+                ONE SPECIAL DATE
+            </div>
+
+            <div class="date">
+                27.02.2026
+            </div>
+
+            <p class="milestone-description">
+                Satu tanggal yang menjadi bagian dari cerita kita.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- FUTURE -->
+    <section id="future">
+
+        <div class="container future">
+
+            <div class="label">
+                WHAT'S NEXT?
+            </div>
+
+            <h2 class="future-title">
+                Cerita kita<br>
+                belum selesai.
+            </h2>
+
+            <p class="future-description">
+                Masih akan ada banyak tempat untuk didatangi,
+                banyak momen untuk dibuat, dan banyak cerita
+                untuk ditambahkan.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer>
+        Made for our little story.
+    </footer>
+
+
+    <!-- LIGHTBOX -->
+    <div id="lightbox" class="lightbox">
+
+        <div
+            class="close"
+            onclick="closeLightbox()"
+        >
+            ×
+        </div>
+
+        <img
+            id="lightboxImage"
+            src=""
+            alt="Foto"
+        >
+
+    </div>
+
+
+    <script>
+
+        /*
+            WEBSITE AKAN MEMBACA FOLDER IMAGES
+            SECARA OTOMATIS MELALUI GITHUB API.
+        */
+
+        const repository =
+            "rellz-cmd/you-me-whats-next";
+
+        const folder =
+            "images";
+
+
+        async function loadPhotos() {
+
+            const gallery =
+                document.getElementById("gallery");
+
+            const mainPhoto =
+                document.getElementById("mainPhoto");
+
+
+            try {
+
+                const response = await fetch(
+                    `https://api.github.com/repos/${repository}/contents/${folder}`
+                );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Tidak bisa mengambil daftar foto."
+                    );
+
+                }
+
+
+                const files =
+                    await response.json();
+
+
+                /*
+                    Ambil hanya file gambar.
+                */
+
+                const images =
+                    files.filter(file => {
+
+                        return file.type === "file" &&
+                        /\.(jpg|jpeg|png|webp|gif)$/i.test(file.name);
+
+                    });
+
+
+                /*
+                    Urutkan berdasarkan nama file.
+                */
+
+                images.sort((a, b) =>
+                    a.name.localeCompare(
+                        b.name,
+                        undefined,
+                        {
+                            numeric: true,
+                            sensitivity: "base"
+                        }
+                    )
+                );
+
+
+                /*
+                    Kalau tidak ada gambar.
+                */
+
+                if (images.length === 0) {
+
+                    gallery.innerHTML = `
+                        <div class="error">
+                            Tidak ada foto yang ditemukan.
+                        </div>
+                    `;
+
+                    return;
+                }
+
+
+                /*
+                    Foto pertama menjadi
+                    foto utama di bagian ABOUT.
+                */
+
+                mainPhoto.src =
+                    images[0].download_url;
+
+
+                /*
+                    Kosongkan loading.
+                */
+
+                gallery.innerHTML = "";
+
+
+                /*
+                    Buat kartu untuk setiap foto.
+                */
+
+                images.forEach((image, index) => {
+
+                    const card =
+                        document.createElement("div");
+
+                    card.className =
+                        "photo-card";
+
+
+                    const img =
+                        document.createElement("img");
+
+
+                    img.src =
+                        image.download_url;
+
+
+                    img.alt =
+                        `Memory ${index + 1}`;
+
+
+                    img.loading =
+                        "lazy";
+
+
+                    card.appendChild(img);
+
+
+                    /*
+                        Klik foto =
+                        buka ukuran besar.
+                    */
+
+                    card.onclick = function() {
+
+                        openLightbox(
+                            image.download_url
+                        );
+
+                    };
+
+
+                    gallery.appendChild(card);
+
+                });
+
+            }
+
+            catch (error) {
+
+                console.error(error);
+
+
+                gallery.innerHTML = `
+                    <div class="error">
+                        Gagal memuat foto.
+                        <br><br>
+                        Silakan refresh halaman.
+                    </div>
+                `;
+
+            }
+
+        }
+
+
+        /*
+            LIGHTBOX
+        */
+
+        function openLightbox(image) {
+
+            const lightbox =
+                document.getElementById("lightbox");
+
+            const lightboxImage =
+                document.getElementById("lightboxImage");
+
+
+            lightboxImage.src =
+                image;
+
+
+            lightbox.classList.add("active");
+
+        }
+
+
+        function closeLightbox() {
+
+            document
+                .getElementById("lightbox")
+                .classList.remove("active");
+
+        }
+
+
+        /*
+            Klik area gelap =
+            tutup foto.
+        */
+
+        document
+            .getElementById("lightbox")
+            .addEventListener(
+                "click",
+                function(event) {
+
+                    if (
+                        event.target === this
+                    ) {
+
+                        closeLightbox();
+
+                    }
+
+                }
+            );
+
+
+        /*
+            Jalankan saat website dibuka.
+        */
+
+        loadPhotos();
+
+    </script>
+
+</body>
+</html>
