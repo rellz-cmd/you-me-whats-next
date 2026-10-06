@@ -1,0 +1,1785 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YOU, ME & WHAT'S NEXT.</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+html{scroll-behavior:smooth}
+
+body{
+    background:#071018;
+    color:#edf5fa;
+    font-family:Arial,Helvetica,sans-serif;
+    overflow-x:hidden;
+}
+
+body.locked{
+    overflow:hidden !important;
+}
+
+:root{
+    --black:#071018;
+    --black2:#0a151f;
+    --blue:#2389cf;
+    --blue-light:#73c5ff;
+    --gray:#8293a0;
+    --border:rgba(115,197,255,.14);
+}
+
+button{font:inherit;cursor:pointer}
+
+body::before{
+    content:"";
+    position:fixed;
+    width:700px;
+    height:700px;
+    left:-350px;
+    top:-350px;
+    background:rgba(25,130,200,.09);
+    border-radius:50%;
+    filter:blur(100px);
+    pointer-events:none;
+    z-index:-1;
+}
+
+/* LOCK SCREEN OVERLAY */
+.lock-overlay{
+    position:fixed;
+    inset:0;
+    background:#071018;
+    z-index:99999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    backdrop-filter:blur(20px);
+    transition:opacity .5s ease, visibility .5s ease;
+}
+
+.lock-overlay.unlocked{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+}
+
+.lock-card{
+    background:#0b1924;
+    border:1px solid var(--border);
+    padding:40px 30px;
+    border-radius:16px;
+    text-align:center;
+    max-width:400px;
+    width:100%;
+    box-shadow:0 20px 50px rgba(0,0,0,.6);
+}
+
+.lock-icon{
+    font-size:36px;
+    margin-bottom:15px;
+}
+
+.lock-card h2{
+    font-size:26px;
+    margin-bottom:10px;
+    letter-spacing:-1px;
+}
+
+.lock-card p{
+    color:var(--gray);
+    font-size:13px;
+    margin-bottom:25px;
+    line-height:1.6;
+}
+
+.lock-input-group{
+    display:flex;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.lock-input-group input{
+    flex:1;
+    background:#071018;
+    border:1px solid #203743;
+    padding:12px 15px;
+    color:#edf5fa;
+    border-radius:8px;
+    font-size:14px;
+    text-align:center;
+    letter-spacing:2px;
+    outline:none;
+    transition:border-color .3s;
+}
+
+.lock-input-group input:focus{
+    border-color:var(--blue-light);
+}
+
+.lock-input-group button{
+    background:#0c3e5e;
+    color:#c9eaff;
+    border:1px solid #277cae;
+    padding:0 20px;
+    border-radius:8px;
+    font-weight:bold;
+    font-size:11px;
+    letter-spacing:1px;
+    transition:.3s;
+}
+
+.lock-input-group button:hover{
+    background:#277cae;
+    color:#fff;
+}
+
+.lock-error{
+    color:#ff6b6b;
+    font-size:12px;
+    min-height:18px;
+}
+
+/* NAVBAR */
+
+nav{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 6vw;
+    background:rgba(7,16,24,.82);
+    backdrop-filter:blur(20px);
+    border-bottom:1px solid rgba(255,255,255,.05);
+    z-index:999;
+}
+
+.logo{
+    font-size:10px;
+    letter-spacing:3px;
+    font-weight:bold;
+}
+
+.nav-menu{
+    display:flex;
+    gap:28px;
+}
+
+.nav-menu a{
+    text-decoration:none;
+    color:#70818c;
+    font-size:9px;
+    letter-spacing:2px;
+    transition:.3s;
+}
+
+.nav-menu a:hover{color:white}
+
+/* HERO */
+
+.hero{
+    min-height:100vh;
+    padding:150px 8vw 100px;
+    display:flex;
+    align-items:center;
+    position:relative;
+}
+
+.hero-content{max-width:1100px}
+
+.hero-small{
+    color:var(--blue-light);
+    font-size:9px;
+    letter-spacing:5px;
+    margin-bottom:30px;
+}
+
+.hero h1{
+    font-size:clamp(55px,9vw,125px);
+    line-height:.83;
+    letter-spacing:-7px;
+    font-weight:800;
+}
+
+.blue{color:var(--blue-light)}
+
+.hero-sub{
+    max-width:600px;
+    margin-top:38px;
+    color:var(--gray);
+    font-size:14px;
+    line-height:1.9;
+}
+
+.hero-bottom{
+    margin-top:40px;
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+.hero-line{
+    width:45px;
+    height:1px;
+    background:var(--blue);
+}
+
+.hero-date{
+    color:#8ca0ad;
+    font-size:9px;
+    letter-spacing:3px;
+}
+
+.scroll{
+    position:absolute;
+    bottom:40px;
+    right:8vw;
+    writing-mode:vertical-rl;
+    color:#4f626e;
+    font-size:8px;
+    letter-spacing:3px;
+}
+
+/* SECTION */
+
+section{
+    padding:120px 8vw;
+}
+
+.dark{
+    background:#09141e;
+    border-top:1px solid rgba(255,255,255,.04);
+    border-bottom:1px solid rgba(255,255,255,.04);
+}
+
+.section-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:30px;
+    margin-bottom:65px;
+}
+
+.section-number{
+    color:var(--blue-light);
+    font-size:9px;
+    letter-spacing:4px;
+    margin-bottom:17px;
+}
+
+h2{
+    font-size:clamp(38px,6vw,72px);
+    line-height:.9;
+    letter-spacing:-4px;
+}
+
+.section-intro{
+    max-width:470px;
+    color:var(--gray);
+    font-size:13px;
+    line-height:1.9;
+}
+
+/* ABOUT */
+
+.intro-layout{
+    display:grid;
+    grid-template-columns:1.3fr .7fr;
+    gap:25px;
+    max-width:1100px;
+}
+
+.intro-main{
+    min-height:420px;
+    padding:45px;
+    background:linear-gradient(
+        135deg,
+        rgba(30,123,180,.15),
+        rgba(7,16,24,.1)
+    );
+    border:1px solid var(--border);
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    position:relative;
+    overflow:hidden;
+}
+
+.intro-main::before{
+    content:"02.2026";
+    position:absolute;
+    top:-20px;
+    right:-15px;
+    font-size:120px;
+    font-weight:bold;
+    color:rgba(112,197,255,.035);
+}
+
+.intro-main p{
+    max-width:650px;
+    color:#a8bac5;
+    font-size:18px;
+    line-height:1.7;
+}
+
+.intro-main strong{color:white}
+
+.intro-side{
+    display:grid;
+    gap:25px;
+}
+
+.mini-card{
+    padding:30px;
+    background:#0b1924;
+    border:1px solid var(--border);
+}
+
+.mini-label{
+    color:#547080;
+    font-size:8px;
+    letter-spacing:3px;
+}
+
+.mini-card h3{
+    font-size:27px;
+    margin-top:30px;
+}
+
+.mini-card p{
+    margin-top:10px;
+    color:#728590;
+    font-size:11px;
+    line-height:1.7;
+}
+
+/* MEMORIES */
+
+.memory-tools{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    margin-bottom:35px;
+    flex-wrap:wrap;
+}
+
+.filters{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+}
+
+.filter{
+    background:transparent;
+    color:#657984;
+    border:1px solid #203743;
+    padding:9px 14px;
+    font-size:8px;
+    letter-spacing:2px;
+    transition:.25s;
+}
+
+.filter:hover,
+.filter.active{
+    background:#0c3e5e;
+    border-color:#277cae;
+    color:#c9eaff;
+}
+
+.memory-total{
+    color:#536773;
+    font-size:9px;
+    letter-spacing:2px;
+}
+
+.memory-total span{
+    color:var(--blue-light);
+    font-size:16px;
+}
+
+.memory-grid{
+    display:grid;
+    grid-template-columns:repeat(12,1fr);
+    grid-auto-rows:65px;
+    gap:12px;
+}
+
+.memory{
+    position:relative;
+    overflow:hidden;
+    background:#0b1924;
+    border:1px solid rgba(255,255,255,.04);
+    cursor:pointer;
+    min-height:250px;
+}
+
+.memory:nth-child(1){
+    grid-column:span 7;
+    grid-row:span 7;
+}
+
+.memory:nth-child(2){
+    grid-column:span 5;
+    grid-row:span 4;
+}
+
+.memory:nth-child(3){
+    grid-column:span 5;
+    grid-row:span 3;
+}
+
+.memory:nth-child(4),
+.memory:nth-child(5),
+.memory:nth-child(6){
+    grid-column:span 4;
+    grid-row:span 4;
+}
+
+.memory:nth-child(n+7){
+    grid-column:span 3;
+    grid-row:span 4;
+}
+
+.memory img{
+    width:100%;
+    height:100%;
+    min-height:100%;
+    object-fit:cover;
+    display:block;
+    transition:.6s;
+}
+
+.memory:hover img{
+    transform:scale(1.05);
+    filter:brightness(.55);
+}
+
+.memory::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(
+        transparent 40%,
+        rgba(0,0,0,.85)
+    );
+}
+
+.memory-content{
+    position:absolute;
+    z-index:2;
+    left:20px;
+    right:20px;
+    bottom:18px;
+}
+
+.memory-number{
+    color:#69bdf3;
+    font-size:8px;
+    letter-spacing:3px;
+}
+
+.memory-title{
+    margin-top:6px;
+    color:white;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.memory-date{
+    margin-top:4px;
+    color:#8fa2ae;
+    font-size:8px;
+}
+
+/* MILESTONE */
+
+.milestone{
+    max-width:1000px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:.5fr 1.5fr;
+    gap:70px;
+    align-items:center;
+}
+
+.milestone-date{
+    font-size:clamp(50px,7vw,90px);
+    line-height:.8;
+    letter-spacing:-6px;
+}
+
+.milestone-date span{
+    display:block;
+    color:var(--blue-light);
+    font-size:11px;
+    letter-spacing:4px;
+    margin-top:25px;
+}
+
+.milestone-content{
+    border-left:1px solid #245d7c;
+    padding-left:40px;
+}
+
+.milestone-content h3{
+    font-size:35px;
+    letter-spacing:-2px;
+    margin-bottom:20px;
+}
+
+.milestone-content p{
+    max-width:600px;
+    color:#8295a1;
+    font-size:14px;
+    line-height:2;
+}
+
+/* FUTURE */
+
+.future{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-top:55px;
+}
+
+.future-item{
+    min-height:250px;
+    padding:30px;
+    background:#091720;
+    border:1px solid var(--border);
+    transition:.3s;
+}
+
+.future-item:hover{
+    transform:translateY(-5px);
+    border-color:#276c91;
+}
+
+.future-no{
+    color:var(--blue-light);
+    font-size:9px;
+    letter-spacing:3px;
+    margin-bottom:70px;
+}
+
+.future-item h3{
+    font-size:22px;
+    letter-spacing:-1px;
+    margin-bottom:14px;
+}
+
+.future-item p{
+    color:#718590;
+    font-size:11px;
+    line-height:1.8;
+}
+
+/* ENDING */
+
+.ending{
+    text-align:center;
+    padding:180px 8vw;
+}
+
+.ending-label{
+    color:var(--blue-light);
+    font-size:9px;
+    letter-spacing:5px;
+    margin-bottom:25px;
+}
+
+.ending h2{
+    font-size:clamp(50px,8vw,100px);
+}
+
+.ending p{
+    max-width:600px;
+    margin:35px auto 0;
+    color:#718590;
+    font-size:13px;
+    line-height:2;
+}
+
+/* FOOTER */
+
+footer{
+    padding:30px 8vw;
+    display:flex;
+    justify-content:space-between;
+    color:#526873;
+    font-size:8px;
+    letter-spacing:2px;
+    border-top:1px solid rgba(255,255,255,.05);
+}
+
+/* MODAL */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.9);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:30px;
+    z-index:2000;
+}
+
+.modal.show{display:flex}
+
+.modal-inner{
+    width:min(1000px,95vw);
+    max-height:90vh;
+    display:grid;
+    grid-template-columns:1.3fr .7fr;
+    background:#0b1924;
+    border:1px solid #254858;
+    overflow:hidden;
+}
+
+.modal-photo{
+    width:100%;
+    height:80vh;
+    object-fit:contain;
+    background:#050b10;
+}
+
+.modal-details{
+    padding:40px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.modal-no{
+    color:var(--blue-light);
+    font-size:9px;
+    letter-spacing:3px;
+    margin-bottom:20px;
+}
+
+.modal-details h3{
+    font-size:25px;
+    margin-bottom:15px;
+}
+
+.modal-details p{
+    color:#718590;
+    font-size:12px;
+    line-height:1.8;
+}
+
+.close{
+    position:absolute;
+    top:20px;
+    right:30px;
+    background:none;
+    border:0;
+    color:white;
+    font-size:35px;
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+    section{
+        padding:90px 5vw;
+    }
+
+    nav{
+        padding:0 5vw;
+    }
+
+    .nav-menu{
+        gap:12px;
+    }
+
+    .nav-menu a{
+        font-size:7px;
+    }
+
+    .section-top{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .intro-layout{
+        grid-template-columns:1fr;
+    }
+
+    .memory-grid{
+        grid-template-columns:repeat(2,1fr);
+        grid-auto-rows:180px;
+    }
+
+    .memory,
+    .memory:nth-child(n){
+        grid-column:span 1;
+        grid-row:span 1;
+        min-height:180px;
+    }
+
+    .memory:nth-child(1){
+        grid-column:span 2;
+    }
+
+    .future{
+        grid-template-columns:1fr;
+    }
+
+    .milestone{
+        grid-template-columns:1fr;
+        gap:40px;
+    }
+
+    .milestone-content{
+        padding-left:25px;
+    }
+
+    .modal-inner{
+        grid-template-columns:1fr;
+        max-height:90vh;
+        overflow:auto;
+    }
+
+    .modal-photo{
+        height:50vh;
+    }
+
+    footer{
+        flex-direction:column;
+        gap:12px;
+    }
+}
+
+@media(max-width:500px){
+
+    .hero{
+        padding-left:5vw;
+        padding-right:5vw;
+    }
+
+    .hero h1{
+        font-size:48px;
+        letter-spacing:-3px;
+    }
+
+    .hero-sub{
+        font-size:12px;
+    }
+
+    h2{
+        font-size:42px;
+        letter-spacing:-2px;
+    }
+
+    .intro-main{
+        padding:30px;
+        min-height:350px;
+    }
+
+    .intro-main p{
+        font-size:15px;
+    }
+
+    .memory-grid{
+        gap:8px;
+        grid-auto-rows:160px;
+    }
+
+    .memory,
+    .memory:nth-child(n){
+        min-height:160px;
+    }
+
+    .memory-content{
+        left:12px;
+        right:12px;
+        bottom:12px;
+    }
+
+    .memory-title{
+        font-size:10px;
+    }
+
+    .memory-date{
+        font-size:7px;
+    }
+
+    .future-item{
+        min-height:220px;
+    }
+
+    .future-no{
+        margin-bottom:50px;
+    }
+
+    .ending{
+        padding:130px 5vw;
+    }
+
+    .modal{
+        padding:10px;
+    }
+
+    .modal-details{
+        padding:25px;
+    }
+}
+</style>
+</head>
+
+<body class="locked">
+
+<!-- LOCK OVERLAY -->
+<div id="lockOverlay" class="lock-overlay">
+    <div class="lock-card">
+        <div class="lock-icon">🔒</div>
+        <h2>Akses Terkunci</h2>
+        <p>Masukkan tanggal rahasia kita untuk membuka halaman ini.</p>
+        <div class="lock-input-group">
+            <input type="password" id="passInput" placeholder="DDMMYYYY" maxlength="10" autocomplete="off">
+            <button onclick="checkPassword()">MASUK</button>
+        </div>
+        <div id="lockError" class="lock-error"></div>
+    </div>
+</div>
+
+<!-- NAVIGATION -->
+
+<nav>
+
+    <div class="logo">
+        YOU, ME & WHAT'S NEXT.
+    </div>
+
+    <div class="nav-menu">
+        <a href="#about">ABOUT</a>
+        <a href="#memories">MEMORIES</a>
+        <a href="#milestone">27.02.26</a>
+        <a href="#future">NEXT</a>
+    </div>
+
+</nav>
+
+
+<!-- HERO -->
+
+<header class="hero">
+
+    <div class="hero-content">
+
+        <div class="hero-small">
+            FOR AURELLIA PRATISTHA SARI — PERSONALLY
+        </div>
+
+        <h1>
+            YOU, ME<br>
+            & WHAT'S <span class="blue">NEXT.</span>
+        </h1>
+
+        <p class="hero-sub">
+            Nggak tahu bakal sampai mana.
+            Untuk sekarang, ya jalanin aja dulu.
+            Sambil sama-sama ngejar apa yang kita mau.
+        </p>
+
+        <div class="hero-bottom">
+            <div class="hero-line"></div>
+
+            <div class="hero-date">
+                27.02.2026
+            </div>
+        </div>
+
+    </div>
+
+    <div class="scroll">
+        SCROLL DOWN
+    </div>
+
+</header>
+
+
+<!-- ABOUT -->
+
+<section id="about" class="dark">
+
+    <div class="section-top">
+
+        <div>
+
+            <div class="section-number">
+                01 / US
+            </div>
+
+            <h2>
+                Ternyata<br>
+                bisa juga.
+            </h2>
+
+        </div>
+
+        <p class="section-intro">
+            Kalau dipikir-pikir lagi,
+            awalnya kita juga nggak ada
+            rencana buat sampai sejauh ini.
+
+            Dan mungkin justru itu yang
+            bikin semuanya terasa lebih nyata.
+        </p>
+
+    </div>
+
+
+    <div class="intro-layout">
+
+        <div class="intro-main">
+
+            <p>
+
+                <strong>
+                    Dulu kita cuma dua orang
+                    di sekolah yang kebetulan
+                    sering ketemu.
+                </strong>
+
+                <br><br>
+
+                Sekarang malah punya terlalu
+                banyak foto, terlalu banyak
+                kejadian random, dan terlalu
+                banyak hal yang cuma kita
+                berdua yang ngerti.
+
+            </p>
+
+        </div>
+
+
+        <div class="intro-side">
+
+            <div class="mini-card">
+
+                <div class="mini-label">
+                    FIRST CHAPTER
+                </div>
+
+                <h3>2025</h3>
+
+                <p>
+                    Waktu semuanya masih
+                    belum jelas.
+                </p>
+
+            </div>
+
+
+            <div class="mini-card">
+
+                <div class="mini-label">
+                    RIGHT NOW
+                </div>
+
+                <h3>Us.</h3>
+
+                <p>
+                    Masih belajar, masih
+                    berkembang, masih jalan.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- MEMORIES -->
+
+<section id="memories">
+
+    <div class="section-top">
+
+        <div>
+
+            <div class="section-number">
+                02 / MEMORIES
+            </div>
+
+            <h2>
+                Too many<br>
+                good ones.
+            </h2>
+
+        </div>
+
+        <p class="section-intro">
+            Ada yang penting.
+            Ada yang random.
+            Ada yang sebenarnya jelek,
+            tapi tetap disimpan.
+
+            Namanya juga kita.
+        </p>
+
+    </div>
+
+
+    <div class="memory-tools">
+
+        <div class="filters">
+
+            <button
+                class="filter active"
+                onclick="filterMemory('all',this)"
+            >
+                ALL
+            </button>
+
+            <button
+                class="filter"
+                onclick="filterMemory('2025',this)"
+            >
+                2025
+            </button>
+
+            <button
+                class="filter"
+                onclick="filterMemory('2026',this)"
+            >
+                2026
+            </button>
+
+        </div>
+
+
+        <div class="memory-total">
+
+            MEMORIES
+
+            <span id="count">
+                0
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div
+        class="memory-grid"
+        id="memoryGrid"
+    >
+
+        <div
+            style="
+                grid-column:1/-1;
+                padding:80px 20px;
+                text-align:center;
+                color:#637984;
+                font-size:11px;
+            "
+        >
+            Memuat semua foto...
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- MILESTONE -->
+
+<section id="milestone" class="dark">
+
+    <div class="milestone">
+
+        <div class="milestone-date">
+
+            27
+
+            <span>
+                FEBRUARY<br>
+                2026
+            </span>
+
+        </div>
+
+
+        <div class="milestone-content">
+
+            <h3>
+                The date
+                that changed things.
+            </h3>
+
+            <p>
+
+                Setelah semua yang sebelumnya
+                terjadi, akhirnya tanggal ini
+                jadi titik di mana kita resmi
+                jalan bareng.
+
+                <br><br>
+
+                Nggak perlu dibuat dramatis.
+
+                Aku cuma senang akhirnya
+                bisa bilang kalau kamu
+                adalah pacarku.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FUTURE -->
+
+<section id="future">
+
+    <div class="section-top">
+
+        <div>
+
+            <div class="section-number">
+                03 / WHAT'S NEXT
+            </div>
+
+            <h2>
+                Kita punya<br>
+                urusan masing-masing.
+            </h2>
+
+        </div>
+
+
+        <p class="section-intro">
+
+            Dan menurutku itu bagus.
+
+            Kita nggak harus selalu melakukan
+            semuanya bersama.
+
+            Yang penting arahnya masih sama.
+
+        </p>
+
+    </div>
+
+
+    <div class="future">
+
+
+        <div class="future-item">
+
+            <div class="future-no">
+                01
+            </div>
+
+            <h3>
+                Build a career.
+            </h3>
+
+            <p>
+                Sama-sama punya target
+                untuk masuk ke tempat kerja
+                yang kita inginkan.
+            </p>
+
+        </div>
+
+
+        <div class="future-item">
+
+            <div class="future-no">
+                02
+            </div>
+
+            <h3>
+                Make them proud.
+            </h3>
+
+            <p>
+                Salah satu tujuan akhirnya:
+                bisa membahagiakan orang tua
+                dari hasil kerja keras sendiri.
+            </p>
+
+        </div>
+
+
+        <div class="future-item">
+
+            <div class="future-no">
+                03
+            </div>
+
+            <h3>
+                See what happens.
+            </h3>
+
+            <p>
+                Nggak perlu tahu semuanya
+                dari sekarang.
+
+                Kita lihat nanti.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- ENDING -->
+
+<section class="ending">
+
+    <div class="ending-label">
+        FOR THE NEXT CHAPTER
+    </div>
+
+    <h2>
+        Let's see<br>
+        what's next.
+    </h2>
+
+    <p>
+
+        Banyak hal yang belum kita tahu.
+
+        Tapi kalau suatu hari kita buka
+        website ini lagi, semoga kita
+        sudah jauh lebih dekat dengan
+        semua yang sekarang masih kita
+        kejar.
+
+    </p>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <div>
+        YOU, ME & WHAT'S NEXT.
+    </div>
+
+    <div>
+        27.02.2026
+    </div>
+
+</footer>
+
+
+<!-- PHOTO MODAL -->
+
+<div
+    class="modal"
+    id="modal"
+>
+
+    <button
+        class="close"
+        onclick="closeModal()"
+    >
+        ×
+    </button>
+
+
+    <div class="modal-inner">
+
+        <img
+            id="modalImage"
+            class="modal-photo"
+            src=""
+            alt=""
+        >
+
+
+        <div class="modal-details">
+
+            <div
+                id="modalNo"
+                class="modal-no"
+            >
+                MEMORY / 001
+            </div>
+
+            <h3 id="modalTitle">
+                Memory
+            </h3>
+
+            <p id="modalDescription">
+                -
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   PASSWORD TANGGAL LOCK SCREEN
+========================================================= */
+
+const CORRECT_PASSWORDS = [
+    "27022026",      // Format DDMMYYYY
+    "27-02-2026",    // Format DD-MM-YYYY
+    "27/02/2026",    // Format DD/MM/YYYY
+    "270226"         // Format DDMMYY
+];
+
+function checkPassword(){
+    const input = document.getElementById("passInput").value.trim();
+    const errorEl = document.getElementById("lockError");
+
+    if(CORRECT_PASSWORDS.includes(input)){
+        document.getElementById("lockOverlay").classList.add("unlocked");
+        document.body.classList.remove("locked");
+        sessionStorage.setItem("site_unlocked", "true");
+    } else {
+        errorEl.innerText = "Tanggal salah! Coba ingat-ingat lagi.";
+        const inputEl = document.getElementById("passInput");
+        inputEl.style.borderColor = "#ff6b6b";
+        setTimeout(function(){
+            inputEl.style.borderColor = "#203743";
+        }, 1500);
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function(){
+    if(sessionStorage.getItem("site_unlocked") === "true"){
+        document.getElementById("lockOverlay").classList.add("unlocked");
+        document.body.classList.remove("locked");
+    } else {
+        document.body.classList.add("locked");
+    }
+
+    const passInput = document.getElementById("passInput");
+    if(passInput){
+        passInput.addEventListener("keypress", function(event){
+            if(event.key === "Enter"){
+                checkPassword();
+            }
+        });
+    }
+});
+
+
+/* =========================================================
+   FOTO OTOMATIS DARI FOLDER GITHUB /images
+========================================================= */
+
+const OWNER = "rellz-cmd";
+const REPO = "you-me-whats-next";
+const FOLDER = "images";
+
+let memories = [];
+
+
+async function loadMemories(){
+
+    const grid =
+        document.getElementById("memoryGrid");
+
+    try{
+
+        const response = await fetch(
+            `https://api.github.com/repos/${OWNER}/${REPO}/contents/${FOLDER}`
+        );
+
+        if(!response.ok){
+            throw new Error("GitHub API gagal.");
+        }
+
+        const files = await response.json();
+
+
+        const images = files
+            .filter(function(file){
+
+                return file.type === "file" &&
+                /\.(jpg|jpeg|png|webp|gif)$/i
+                .test(file.name);
+
+            })
+            .sort(function(a,b){
+
+                return a.name.localeCompare(
+                    b.name,
+                    undefined,
+                    {
+                        numeric:true,
+                        sensitivity:"base"
+                    }
+                );
+
+            });
+
+
+        memories = images.map(function(file,index){
+
+            const src =
+                `https://${OWNER}.github.io/${REPO}/${FOLDER}/${encodeURIComponent(file.name)}`;
+
+
+            const yearMatch =
+                file.name.match(/2025|2026/);
+
+
+            const year =
+                yearMatch
+                ? yearMatch[0]
+                : "2026";
+
+
+            const dateMatch =
+                file.name.match(
+                    /(2025|2026)-(\d{2})-(\d{2})/
+                );
+
+
+            let date = "MEMORY";
+
+
+            if(dateMatch){
+
+                date =
+                    `${dateMatch[3]}.${dateMatch[2]}.${dateMatch[1]}`;
+
+            }
+
+
+            const title =
+                file.name
+                .replace(
+                    /\.(jpg|jpeg|png|webp|gif)$/i,
+                    ""
+                )
+                .replace(/\s+/g," ")
+                .trim();
+
+
+            return {
+
+                src:src,
+
+                year:year,
+
+                favorite:false,
+
+                title:
+                    title ||
+                    `Memory ${index+1}`,
+
+                date:date,
+
+                note:
+                    "Salah satu bagian dari cerita kita."
+
+            };
+
+        });
+
+
+        renderMemories();
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        grid.innerHTML = `
+
+            <div
+                style="
+                    grid-column:1/-1;
+                    padding:80px 20px;
+                    text-align:center;
+                    color:#637984;
+                    line-height:2;
+                    font-size:11px;
+                "
+            >
+
+                <div
+                    style="
+                        color:#8da2ae;
+                        margin-bottom:8px;
+                    "
+                >
+                    Foto belum bisa dimuat.
+                </div>
+
+                Pastikan folder
+                <strong>images</strong>
+                ada di repository GitHub.
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   TAMPILKAN FOTO
+========================================================= */
+
+function renderMemories(data = memories){
+
+    const grid =
+        document.getElementById(
+            "memoryGrid"
+        );
+
+
+    grid.innerHTML = "";
+
+
+    document.getElementById(
+        "count"
+    ).innerText =
+        data.length;
+
+
+    if(data.length === 0){
+
+        grid.innerHTML = `
+
+            <div
+                style="
+                    grid-column:1/-1;
+                    padding:80px 20px;
+                    text-align:center;
+                    color:#637984;
+                "
+            >
+                Belum ada foto.
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    data.forEach(function(memory,index){
+
+        const card =
+            document.createElement("div");
+
+
+        card.className =
+            "memory";
+
+
+        const img =
+            document.createElement("img");
+
+
+        img.src =
+            memory.src;
+
+
+        img.alt =
+            memory.title;
+
+
+        img.loading =
+            "lazy";
+
+
+        const content =
+            document.createElement("div");
+
+
+        content.className =
+            "memory-content";
+
+
+        content.innerHTML = `
+
+            <div class="memory-number">
+                MEMORY /
+                ${String(index+1).padStart(3,"0")}
+            </div>
+
+            <div class="memory-title">
+                ${memory.title}
+            </div>
+
+            <div class="memory-date">
+                ${memory.date}
+            </div>
+
+        `;
+
+
+        card.appendChild(img);
+
+        card.appendChild(content);
+
+
+        card.onclick =
+            function(){
+
+                openModal(
+                    memory,
+                    index
+                );
+
+            };
+
+
+        grid.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================================================
+   FILTER
+========================================================= */
+
+function filterMemory(type,button){
+
+    document
+        .querySelectorAll(".filter")
+        .forEach(function(btn){
+
+            btn.classList.remove("active");
+
+        });
+
+
+    button.classList.add("active");
+
+
+    let result;
+
+
+    if(type === "all"){
+
+        result = memories;
+
+    }
+
+    else{
+
+        result =
+            memories.filter(
+                function(memory){
+
+                    return memory.year === type;
+
+                }
+            );
+
+    }
+
+
+    renderMemories(result);
+
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+function openModal(memory,index){
+
+    document.getElementById(
+        "modalImage"
+    ).src =
+        memory.src;
+
+
+    document.getElementById(
+        "modalNo"
+    ).innerText =
+        "MEMORY / " +
+        String(index+1).padStart(3,"0");
+
+
+    document.getElementById(
+        "modalTitle"
+    ).innerText =
+        memory.title;
+
+
+    document.getElementById(
+        "modalDescription"
+    ).innerText =
+        memory.note;
+
+
+    document.getElementById(
+        "modal"
+    ).classList.add("show");
+
+}
+
+
+function closeModal(){
+
+    document.getElementById(
+        "modal"
+    ).classList.remove("show");
+
+}
+
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Escape"){
+            closeModal();
+        }
+
+    }
+);
+
+
+/* =========================================================
+   MULAI
+========================================================= */
+
+loadMemories();
+
+</script>
+
+</body>
+</html>
