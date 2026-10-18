@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>YOU, ME & WHAT'S NEXT.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -1314,6 +1317,202 @@ body.locked::before{
 @media(max-width:800px){.music-layout{grid-template-columns:1fr}.music-player-card,.playlist-panel{padding:20px}.music-art{height:165px}.modal-video{height:48vh;max-height:48vh}}
 @media(prefers-reduced-motion:reduce){.music-art:before,.music-art:after{animation:none}*{scroll-behavior:auto!important;transition:none!important}}
 
+
+/* =========================================================
+   V3 — ROMANTIC SCRAPBOOK x MONSTERS, INC. x TOY STORY
+   Foto = polaroid natural (tidak di-crop paksa), miring-miring,
+   dengan selotip, stiker, dan aksesoris monster/Toy Story.
+========================================================= */
+:root{
+    --rose:#ff8cc6;
+    --rose-soft:#ffd6ea;
+    --cream:#fffaf3;
+    --hand:'Caveat','Segoe Script','Bradley Hand','Comic Sans MS',cursive;
+}
+
+/* Judul hero: gradasi biru -> pink */
+.hero h1 .blue{
+    background:linear-gradient(90deg,#55d8ff,#ff9ccd 70%);
+    -webkit-background-clip:text;background-clip:text;
+    color:transparent!important;-webkit-text-fill-color:transparent;
+    text-shadow:none!important;
+}
+
+/* ---- Section memories: langit senja + awan ala wallpaper kamar Andy ---- */
+#memories{
+    position:relative;overflow:hidden;
+    background:
+      radial-gradient(ellipse 360px 110px at 10% 9%, rgba(255,255,255,.075), transparent 70%),
+      radial-gradient(ellipse 440px 130px at 88% 20%, rgba(255,255,255,.06), transparent 70%),
+      radial-gradient(ellipse 380px 120px at 18% 58%, rgba(255,255,255,.05), transparent 70%),
+      radial-gradient(ellipse 480px 140px at 84% 86%, rgba(255,255,255,.06), transparent 70%),
+      radial-gradient(circle at 50% 0%, rgba(255,114,182,.17), transparent 45%),
+      radial-gradient(circle at 50% 100%, rgba(141,92,255,.17), transparent 50%),
+      linear-gradient(180deg,#0c1424,#1a1230 55%,#0b1422);
+}
+/* tali garland aksesoris (menimpa mata kecil bawaan section) */
+#memories::before{
+    content:"💗  ⭐  👁️  💚  🚀  👽  🤠  💗  ⭐  👁️  💚  🚀  👽  🤠  💗  ⭐  👁️  💚  🚀  👽  🤠";
+    position:absolute;left:0;right:0;top:26px;width:100%;height:auto;
+    background:none;border-radius:0;opacity:.85;
+    text-align:center;white-space:nowrap;overflow:hidden;
+    font-size:18px;letter-spacing:16px;
+    filter:drop-shadow(0 3px 5px rgba(0,0,0,.35));
+}
+#memories .section-number{color:var(--rose)!important}
+
+/* pita kata-kata manis */
+.scrap-banner{
+    display:flex;flex-wrap:wrap;justify-content:center;gap:12px;
+    margin:-18px 0 46px;
+}
+.scrap-banner span{
+    font-family:var(--hand);font-size:23px;line-height:1;
+    padding:8px 18px;border-radius:999px;
+    color:var(--rose-soft);
+    border:1.5px dashed rgba(255,182,220,.55);
+    background:rgba(255,114,182,.08);
+    transform:rotate(-1.6deg);
+}
+.scrap-banner span:nth-child(2){
+    color:#d3f7ae;border-color:rgba(182,239,85,.55);
+    background:rgba(114,209,47,.08);transform:rotate(1.4deg);
+}
+.scrap-banner span:nth-child(3){
+    color:#c2eeff;border-color:rgba(85,216,255,.55);
+    background:rgba(85,216,255,.08);transform:rotate(-1deg);
+}
+
+/* ---- Galeri: kolom masonry, rasio asli foto dipertahankan ---- */
+#memoryGrid{
+    display:block!important;
+    column-count:4;column-gap:30px;
+    padding:14px 8px 0;
+}
+@media(max-width:1150px){#memoryGrid{column-count:3}}
+@media(max-width:800px){#memoryGrid{column-count:2;column-gap:16px;padding:10px 4px 0}}
+
+.polaroid{
+    --rot:-2deg;
+    position:relative;display:inline-block;width:100%;
+    margin:0 0 40px;padding:12px 12px 0;
+    background:linear-gradient(180deg,var(--cream),#f6e9dc);
+    border-radius:4px;cursor:pointer;outline:none;
+    break-inside:avoid;-webkit-column-break-inside:avoid;
+    transform:rotate(var(--rot));
+    box-shadow:0 16px 32px rgba(0,0,0,.45),inset 0 1px 0 #fff;
+    transition:transform .4s cubic-bezier(.2,.9,.3,1.25),box-shadow .35s;
+    animation:polaroidIn .7s ease backwards;
+}
+.polaroid:nth-child(6n+1){--rot:-2.4deg}
+.polaroid:nth-child(6n+2){--rot:1.8deg}
+.polaroid:nth-child(6n+3){--rot:-0.9deg}
+.polaroid:nth-child(6n+4){--rot:2.6deg}
+.polaroid:nth-child(6n+5){--rot:-2.9deg}
+.polaroid:nth-child(6n+6){--rot:1.1deg}
+@keyframes polaroidIn{
+    from{opacity:0;transform:translateY(26px) rotate(var(--rot)) scale(.95)}
+}
+.polaroid:hover,.polaroid:focus-visible{
+    transform:rotate(0) translateY(-8px) scale(1.05);
+    z-index:6;
+    box-shadow:0 28px 54px rgba(0,0,0,.55),0 0 42px rgba(255,114,182,.28);
+}
+/* hati kecil muncul saat hover */
+.polaroid::after{
+    content:"💗";position:absolute;top:-16px;right:-8px;font-size:26px;
+    opacity:0;transform:translateY(8px) scale(.6);z-index:7;
+    transition:.35s;pointer-events:none;
+}
+.polaroid:hover::after,.polaroid:focus-visible::after{opacity:1;transform:translateY(-6px) scale(1) rotate(12deg)}
+
+.polaroid-photo{position:relative;overflow:hidden;background:#1b2330;border-radius:2px}
+.polaroid-photo img,
+.polaroid-photo video{
+    display:block;width:100%;height:auto;min-height:150px;
+    object-fit:cover;background:#1b2330;
+    filter:saturate(1.08) contrast(1.02);
+    transition:transform .6s,filter .6s;
+}
+.polaroid:hover .polaroid-photo img,
+.polaroid:hover .polaroid-photo video{transform:scale(1.05)}
+/* glow pink-biru tipis di atas foto */
+.polaroid-photo::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(135deg,rgba(255,150,200,.16),transparent 42%,rgba(110,200,255,.14));
+}
+.play-badge{
+    position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:52px;height:52px;border-radius:50%;display:grid;place-items:center;
+    background:rgba(255,114,182,.88);color:#fff;font-size:18px;padding-left:3px;
+    box-shadow:0 0 0 6px rgba(255,255,255,.25);z-index:2;
+}
+
+.polaroid figcaption{padding:12px 6px 17px;text-align:center}
+.pc-title{
+    font-family:var(--hand);font-size:23px;line-height:1.1;color:#3b2a3a;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.pc-meta{margin-top:5px;font-size:9px;letter-spacing:2px;color:#a47b93}
+.pc-meta b{color:#e0569a;font-weight:700}
+
+/* selotip washi 4 warna */
+.tape{
+    position:absolute;top:-13px;left:50%;width:86px;height:26px;margin-left:-43px;
+    transform:rotate(-3deg);z-index:3;opacity:.93;
+    box-shadow:0 2px 6px rgba(0,0,0,.25);
+    background:repeating-linear-gradient(45deg,rgba(255,170,215,.85) 0 8px,rgba(255,255,255,.7) 8px 16px);
+}
+.polaroid:nth-child(4n+2) .tape{transform:rotate(4deg);background:repeating-linear-gradient(45deg,rgba(182,239,85,.8) 0 8px,rgba(255,255,255,.7) 8px 16px)}
+.polaroid:nth-child(4n+3) .tape{transform:rotate(-5deg);background:repeating-linear-gradient(45deg,rgba(125,215,255,.8) 0 8px,rgba(255,255,255,.7) 8px 16px)}
+.polaroid:nth-child(4n+4) .tape{transform:rotate(2deg);background:repeating-linear-gradient(45deg,rgba(190,160,255,.8) 0 8px,rgba(255,255,255,.7) 8px 16px)}
+
+/* stiker aksesoris */
+.sticker{
+    position:absolute;z-index:5;bottom:46px;width:46px;height:46px;
+    display:grid;place-items:center;font-size:29px;pointer-events:none;
+    filter:drop-shadow(0 4px 6px rgba(0,0,0,.4));
+    transition:transform .4s cubic-bezier(.2,.9,.3,1.4);
+}
+.polaroid.pos-l .sticker{left:-16px;transform:rotate(-12deg)}
+.polaroid.pos-r .sticker{right:-16px;transform:rotate(12deg)}
+.polaroid:hover .sticker{transform:scale(1.25) rotate(-8deg)}
+/* bintang sheriff (Woody) */
+.sticker .star{
+    width:42px;height:42px;display:block;
+    background:linear-gradient(135deg,#ffe58a,#e2a31f);
+    clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+}
+/* mata Mike Wazowski */
+.sticker .meye{
+    width:40px;height:40px;border-radius:50%;display:block;
+    border:3px solid #3b7f20;
+    background:radial-gradient(circle,#101820 0 20%,#f5f1df 22% 58%,#63b82f 60%);
+}
+
+/* ---- Modal: nuansa romantis ---- */
+.modal-inner{
+    border:2px solid rgba(255,140,198,.4)!important;border-radius:22px!important;
+    background:linear-gradient(145deg,#1c1432,#0b1924)!important;
+    box-shadow:0 30px 90px rgba(0,0,0,.6),0 0 60px rgba(255,114,182,.12);
+}
+.modal-details h3{font-family:var(--hand);font-size:40px!important;color:var(--rose-soft);font-weight:700}
+.modal-no{color:var(--rose)!important}
+
+@media(max-width:800px){
+    .polaroid{padding:8px 8px 0;margin-bottom:30px}
+    .polaroid:nth-child(n){--rot:-1.4deg}
+    .polaroid:nth-child(2n){--rot:1.4deg}
+    .pc-title{font-size:19px}
+    .sticker{width:36px;height:36px;font-size:22px;bottom:38px}
+    .sticker .star{width:32px;height:32px}
+    .sticker .meye{width:30px;height:30px}
+    .tape{width:64px;margin-left:-32px;height:20px}
+    #memories::before{font-size:14px;letter-spacing:10px}
+    .scrap-banner span{font-size:19px;padding:7px 14px}
+}
+@media(prefers-reduced-motion:reduce){.polaroid{animation:none}}
+
 </style>
 </head>
 
@@ -1563,6 +1762,12 @@ body.locked::before{
 
     </div>
 
+
+    <div class="scrap-banner" aria-hidden="true">
+        <span>To infinity &amp; beyond, with you 🚀</span>
+        <span>Every memory = pure laugh power ⚡💚</span>
+        <span>You're my favorite sidekick 🤠</span>
+    </div>
 
     <div class="memory-tools">
 
@@ -2163,76 +2368,81 @@ function renderMemories(data = memories){
     }
 
 
+    const STICKERS = [
+        '<i class="star"></i>',      // bintang sheriff
+        '<i class="meye"></i>',      // mata Mike
+        '👽',                        // alien Pizza Planet
+        '💗',
+        '🚀',                        // Buzz
+        '🤠',                        // Woody
+        '💚',
+        '👁️'
+    ];
+
     data.forEach(function(memory,index){
 
-        const card =
-            document.createElement("div");
+        const card = document.createElement("figure");
+        card.className = "polaroid " + (index % 2 ? "pos-r" : "pos-l");
+        card.style.animationDelay = ((index % 8) * 70) + "ms";
+        card.tabIndex = 0;
+        card.setAttribute("role","button");
+        card.setAttribute("aria-label","Buka memori: " + memory.title);
 
+        const tape = document.createElement("div");
+        tape.className = "tape";
 
-        card.className =
-            "memory";
+        const frame = document.createElement("div");
+        frame.className = "polaroid-photo";
 
-
-        const media =
-            document.createElement(memory.isVideo ? "video" : "img");
-
+        const media = document.createElement(memory.isVideo ? "video" : "img");
         media.src = memory.src;
-        media.className = memory.isVideo ? "memory-video" : "";
-        media.setAttribute("aria-label", memory.title);
         if(memory.isVideo){
+            media.className = "memory-video";
             media.muted = true;
             media.controls = false;
             media.playsInline = true;
             media.preload = "metadata";
-            media.muted = true;
-            media.setAttribute("aria-label", "Klik untuk memutar video " + memory.title);
         }else{
             media.alt = memory.title;
             media.loading = "lazy";
         }
+        frame.appendChild(media);
 
+        if(memory.isVideo){
+            const play = document.createElement("span");
+            play.className = "play-badge";
+            play.textContent = "▶";
+            frame.appendChild(play);
+        }
 
-        const content =
-            document.createElement("div");
+        const sticker = document.createElement("div");
+        sticker.className = "sticker";
+        sticker.setAttribute("aria-hidden","true");
+        sticker.innerHTML = STICKERS[index % STICKERS.length];
 
+        const caption = document.createElement("figcaption");
+        const title = document.createElement("div");
+        title.className = "pc-title";
+        title.textContent = memory.title;
+        const meta = document.createElement("div");
+        meta.className = "pc-meta";
+        meta.innerHTML = "<b>♥</b> MEMORY " + String(index+1).padStart(3,"0") + " · ";
+        meta.appendChild(document.createTextNode(memory.date));
+        caption.appendChild(title);
+        caption.appendChild(meta);
 
-        content.className =
-            "memory-content";
+        card.appendChild(tape);
+        card.appendChild(frame);
+        card.appendChild(sticker);
+        card.appendChild(caption);
 
-
-        content.innerHTML = `
-
-            <div class="memory-number">
-                MEMORY /
-                ${String(index+1).padStart(3,"0")}
-            </div>
-
-            <div class="memory-title">
-                ${memory.title.replace(/[&<>"']/g, function(ch){return ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[ch];})}
-            </div>
-
-            <div class="memory-date">
-                ${memory.date}
-            </div>
-
-        `;
-
-
-        card.appendChild(media);
-
-        card.appendChild(content);
-
-
-        card.onclick =
-            function(){
-
-                openModal(
-                    memory,
-                    index
-                );
-
-            };
-
+        card.addEventListener("click", function(){ openModal(memory,index); });
+        card.addEventListener("keydown", function(e){
+            if(e.key === "Enter" || e.key === " "){
+                e.preventDefault();
+                openModal(memory,index);
+            }
+        });
 
         grid.appendChild(card);
 
