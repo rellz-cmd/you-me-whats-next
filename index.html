@@ -1513,6 +1513,114 @@ body.locked::before{
 }
 @media(prefers-reduced-motion:reduce){.polaroid{animation:none}}
 
+
+
+/* =========================================================
+   REVISION: FOTO DI BAGIAN CERITA + LAGU UNTUK SETIAP FOTO
+========================================================= */
+.intro-main{
+    isolation:isolate;
+    justify-content:flex-end;
+}
+.intro-photo-collage{
+    position:absolute;
+    inset:0;
+    z-index:0;
+    display:grid;
+    grid-template-columns:1.15fr .85fr;
+    grid-template-rows:1fr 1fr;
+    gap:9px;
+    padding:12px;
+    opacity:.78;
+}
+.intro-photo-collage:empty{
+    background:
+      radial-gradient(circle at 25% 25%,rgba(255,140,198,.22),transparent 35%),
+      radial-gradient(circle at 75% 75%,rgba(85,216,255,.2),transparent 38%);
+}
+.intro-photo-collage img{
+    width:100%;
+    height:100%;
+    min-height:0;
+    object-fit:cover;
+    border-radius:9px;
+    border:1px solid rgba(255,255,255,.18);
+    box-shadow:0 8px 25px rgba(0,0,0,.28);
+}
+.intro-photo-collage img:first-child{
+    grid-row:1 / 3;
+}
+.intro-photo-collage img:nth-child(2),
+.intro-photo-collage img:nth-child(3){
+    min-height:0;
+}
+.intro-main::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:1;
+    background:linear-gradient(180deg,rgba(4,9,16,.05) 0%,rgba(4,9,16,.35) 35%,rgba(4,9,16,.94) 100%);
+    pointer-events:none;
+}
+.intro-main p{
+    position:relative;
+    z-index:2;
+    max-width:720px;
+    padding:18px 20px;
+    margin:-10px -10px -10px;
+    border-radius:12px;
+    background:rgba(3,8,14,.48);
+    backdrop-filter:blur(5px);
+    text-shadow:0 2px 12px rgba(0,0,0,.55);
+}
+.intro-main strong{color:#fff}
+
+.photo-song-button{
+    position:absolute;
+    z-index:8;
+    top:14px;
+    right:14px;
+    width:42px;
+    height:42px;
+    display:grid;
+    place-items:center;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,.65)!important;
+    background:linear-gradient(135deg,#ff79b7,#0d789f)!important;
+    color:white!important;
+    font-size:17px!important;
+    box-shadow:0 5px 18px rgba(0,0,0,.38),0 0 20px rgba(255,114,182,.25)!important;
+}
+.photo-song-button:hover{transform:scale(1.08)!important}
+.photo-song-button.no-song{
+    opacity:.55;
+    cursor:not-allowed;
+    filter:grayscale(.6);
+}
+.polaroid{position:relative}
+.pc-song-hint{
+    margin-top:7px;
+    color:#b14f83;
+    font-size:10px;
+    letter-spacing:.3px;
+    text-align:center;
+}
+.modal-song-button:disabled{opacity:.5;cursor:not-allowed;filter:grayscale(1)}
+.modal-song-button{
+    margin-top:22px;
+    align-self:flex-start;
+    padding:12px 18px;
+    border-radius:999px;
+    color:#fff!important;
+    font-size:11px!important;
+    letter-spacing:1px;
+}
+@media(max-width:800px){
+    .intro-main{min-height:390px}
+    .intro-photo-collage{gap:6px;padding:8px}
+    .intro-main p{font-size:15px;padding:14px}
+}
+
 </style>
 </head>
 
@@ -1558,7 +1666,6 @@ body.locked::before{
     <div class="nav-menu">
         <a href="#about">ABOUT</a>
         <a href="#memories">MEMORIES</a>
-        <a href="#music">OUR MUSIC</a>
         <a href="#milestone">27.02.26</a>
         <a href="#future">NEXT</a>
     </div>
@@ -1604,37 +1711,22 @@ body.locked::before{
 </header>
 
 
-<!-- OUR MUSIC / PLAYLIST -->
-<section id="music" class="dark music-section">
-    <div class="section-top">
-        <div>
-            <div class="section-number">01 / OUR SOUNDTRACK</div>
-            <h2>Every song<br>means something.</h2>
-        </div>
-        <p class="section-intro">Lagu-lagu yang mengingatkan kita pada hal kecil, perjalanan, dan cerita yang sedang kita tulis bersama. Tambahkan file MP3 ke folder <strong>music</strong> di repository GitHub.</p>
-    </div>
-    <div class="music-layout">
-        <div class="music-player-card">
-            <div class="music-art" id="musicArt" aria-hidden="true"><span>♫</span><i>👁</i></div>
-            <div class="music-eyebrow">NOW PLAYING • OUR LITTLE UNIVERSE</div>
-            <h3 id="trackTitle">Pilih lagu kenangan kita</h3>
-            <p id="trackArtist">Playlist akan dimuat dari GitHub</p>
-            <audio id="audioPlayer" preload="metadata"></audio>
-            <div class="audio-progress-row"><span id="audioCurrent">0:00</span><input id="audioSeek" type="range" min="0" max="100" value="0" aria-label="Posisi lagu"><span id="audioDuration">0:00</span></div>
-            <div class="audio-controls">
-                <button type="button" id="prevTrack" aria-label="Lagu sebelumnya" title="Previous">⏮</button>
-                <button type="button" id="togglePlay" class="play-main" aria-label="Putar lagu">▶</button>
-                <button type="button" id="nextTrack" aria-label="Lagu berikutnya" title="Next">⏭</button>
-            </div>
-            <div id="musicStatus" class="music-status" role="status">Mencari lagu di folder music…</div>
-        </div>
-        <div class="playlist-panel">
-            <div class="playlist-heading"><div><span class="mini-label">YOUR FAVORITES</span><h3>Our playlist <span>💚</span></h3></div><span id="trackCount" class="playlist-count">0 TRACKS</span></div>
-            <div id="playlistList" class="playlist-list"><div class="playlist-empty">Lagu kamu akan muncul di sini.</div></div>
-            <p class="playlist-tip">Tip: nama file bisa dibuat seperti <strong>01 - Lagu Favorit.mp3</strong>. Browser akan memutar file audio yang didukung, misalnya MP3, OGG, atau WAV.</p>
-        </div>
-    </div>
-</section>
+<!-- AUDIO ENGINE: disembunyikan kerana lagu dimainkan melalui setiap foto -->
+<div id="photoAudioEngine" hidden aria-hidden="true">
+    <div id="musicArt"></div>
+    <div id="trackTitle"></div>
+    <div id="trackArtist"></div>
+    <audio id="audioPlayer" preload="metadata"></audio>
+    <input id="audioSeek" type="range" min="0" max="100" value="0" aria-label="Posisi lagu">
+    <span id="audioCurrent">0:00</span>
+    <span id="audioDuration">0:00</span>
+    <button type="button" id="prevTrack">Previous</button>
+    <button type="button" id="togglePlay">Play</button>
+    <button type="button" id="nextTrack">Next</button>
+    <div id="musicStatus" role="status"></div>
+    <span id="trackCount"></span>
+    <div id="playlistList"></div>
+</div>
 
 <!-- ABOUT -->
 
@@ -1670,6 +1762,8 @@ body.locked::before{
     <div class="intro-layout">
 
         <div class="intro-main">
+
+            <div class="intro-photo-collage" id="introPhotoCollage" aria-hidden="true"></div>
 
             <p>
 
@@ -2075,6 +2169,10 @@ body.locked::before{
                 -
             </p>
 
+            <button type="button" id="modalSongButton" class="modal-song-button">
+                ♫ PUTAR LAGU FOTO INI
+            </button>
+
         </div>
 
     </div>
@@ -2262,6 +2360,8 @@ async function loadMemories(){
 
                 src:src,
 
+                filename:file.name,
+
                 isVideo:isVideo,
 
                 year:year,
@@ -2275,7 +2375,9 @@ async function loadMemories(){
                 date:date,
 
                 note:
-                    "Salah satu bagian dari cerita kita."
+                    "Salah satu bagian dari cerita kita.",
+
+                trackIndex:-1
 
             };
 
@@ -2283,6 +2385,8 @@ async function loadMemories(){
 
 
         renderMemories();
+        renderIntroPhotos();
+        matchSongsToPhotos();
 
     }
 
@@ -2415,6 +2519,22 @@ function renderMemories(data = memories){
             frame.appendChild(play);
         }
 
+        const songButton = document.createElement("button");
+        songButton.type = "button";
+        songButton.className = "photo-song-button";
+        songButton.title = memory.trackIndex >= 0 ? "Putar lagu untuk foto ini" : "Belum ada lagu yang dipasangkan";
+        songButton.textContent = memory.trackIndex >= 0 ? "♫" : "♪";
+        if(memory.trackIndex < 0) songButton.classList.add("no-song");
+        songButton.addEventListener("click",function(event){
+            event.stopPropagation();
+            if(memory.trackIndex >= 0){
+                playTrack(memory.trackIndex, memory.title);
+            }else{
+                document.getElementById("musicStatus").textContent =
+                    "Belum ada lagu untuk foto ini. Samakan nama file foto dan lagu, atau isi PHOTO_SONG_MAP di index.html.";
+            }
+        });
+
         const sticker = document.createElement("div");
         sticker.className = "sticker";
         sticker.setAttribute("aria-hidden","true");
@@ -2430,9 +2550,14 @@ function renderMemories(data = memories){
         meta.appendChild(document.createTextNode(memory.date));
         caption.appendChild(title);
         caption.appendChild(meta);
+        const songHint = document.createElement("div");
+        songHint.className = "pc-song-hint";
+        songHint.textContent = memory.trackIndex >= 0 ? "♫ " + tracks[memory.trackIndex].name : "♫ lagu belum dipasangkan";
+        caption.appendChild(songHint);
 
         card.appendChild(tape);
         card.appendChild(frame);
+        card.appendChild(songButton);
         card.appendChild(sticker);
         card.appendChild(caption);
 
@@ -2448,6 +2573,27 @@ function renderMemories(data = memories){
 
     });
 
+}
+
+
+/* =========================================================
+   FOTO PENGISI KARTU CERITA
+   Mengambil 3 foto pertama dari folder images.
+========================================================= */
+function renderIntroPhotos(){
+    const collage = document.getElementById("introPhotoCollage");
+    if(!collage) return;
+
+    collage.innerHTML = "";
+    const photos = memories.filter(memory => !memory.isVideo).slice(0,3);
+
+    photos.forEach(function(memory){
+        const img = document.createElement("img");
+        img.src = memory.src;
+        img.alt = "";
+        img.loading = "lazy";
+        collage.appendChild(img);
+    });
 }
 
 
@@ -2541,10 +2687,24 @@ function openModal(memory,index){
     ).innerText =
         memory.note;
 
+    const modalSongButton = document.getElementById("modalSongButton");
+    modalSongButton.disabled = memory.trackIndex < 0;
+    modalSongButton.textContent = memory.trackIndex >= 0
+        ? "♫ PUTAR: " + tracks[memory.trackIndex].name
+        : "♫ BELUM ADA LAGU UNTUK FOTO INI";
+    modalSongButton.onclick = function(){
+        if(memory.trackIndex >= 0) playTrack(memory.trackIndex, memory.title);
+    };
 
-    document.getElementById(
-        "modal"
-    ).classList.add("show");
+    document.getElementById("modal").classList.add("show");
+
+    // Saat foto dibuka, lagu yang dipasangkan ikut diputar.
+    if(memory.trackIndex >= 0){
+        playTrack(memory.trackIndex, memory.title);
+    }else{
+        document.getElementById("musicStatus").textContent =
+            "Foto ini belum memiliki pasangan lagu. Samakan nama file foto dan lagu, atau isi PHOTO_SONG_MAP.";
+    }
 
 }
 
@@ -2582,6 +2742,55 @@ document.addEventListener(
 const MUSIC_FOLDER = "music";
 let tracks = [];
 let currentTrackIndex = -1;
+
+/*
+  PASANGAN LAGU PER FOTO (OPSIONAL)
+  Isi jika nama file foto dan lagu berbeda.
+  Format:
+  "nama-foto.jpg": "nama-lagu.mp3"
+
+  Jika dibiarkan kosong, website otomatis mencari lagu
+  yang nama filenya sama dengan nama foto.
+*/
+const PHOTO_SONG_MAP = {
+    // "foto-kita-1.jpg": "lagu-kenangan-1.mp3",
+    // "foto-kita-2.jpg": "lagu-kenangan-2.mp3"
+};
+
+function cleanAssetName(filename){
+    return String(filename || "")
+        .replace(/\.(jpg|jpeg|png|webp|gif|mp4|webm|ogg|mov|m4v|mp3|m4a|aac|oga|wav|flac)$/i,"")
+        .replace(/^\d+[\s._-]*/,"")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g,"")
+        .trim();
+}
+
+function matchSongsToPhotos(){
+    if(!memories.length || !tracks.length) return;
+
+    memories.forEach(function(memory){
+        const mappedFilename = PHOTO_SONG_MAP[memory.filename] || PHOTO_SONG_MAP[memory.title];
+        let found = -1;
+
+        if(mappedFilename){
+            found = tracks.findIndex(track =>
+                track.filename.toLowerCase() === mappedFilename.toLowerCase()
+            );
+        }
+
+        if(found < 0){
+            const photoKey = cleanAssetName(memory.filename || memory.title);
+            found = tracks.findIndex(track => cleanAssetName(track.filename) === photoKey);
+        }
+
+        memory.trackIndex = found;
+    });
+
+    renderMemories();
+    renderIntroPhotos();
+}
+
 const audioPlayer = document.getElementById("audioPlayer");
 const audioSeek = document.getElementById("audioSeek");
 
@@ -2624,7 +2833,8 @@ async function loadPlaylist(){
             button.addEventListener("click",() => playTrack(index));
             list.appendChild(button);
         });
-        status.textContent = "Pilih lagu untuk mulai mendengarkan. 🎧";
+        status.textContent = "Pilih lagu dari playlist atau buka foto untuk memutar lagu pasangannya. 🎧";
+        matchSongsToPhotos();
     }catch(error){
         console.warn("Playlist tidak dapat dimuat:",error);
         list.innerHTML = '<div class="playlist-empty">Playlist belum bisa dimuat. Pastikan repository GitHub publik dan folder <strong>music</strong> tersedia.</div>';
@@ -2641,12 +2851,14 @@ function updatePlaylistSelection(){
     });
 }
 
-async function playTrack(index){
+async function playTrack(index, photoTitle){
     if(!tracks.length) return;
     currentTrackIndex = (index + tracks.length) % tracks.length;
     const track = tracks[currentTrackIndex];
     document.getElementById("trackTitle").textContent = track.name;
-    document.getElementById("trackArtist").textContent = "YOU, ME & WHAT'S NEXT. • OUR FAVORITES";
+    document.getElementById("trackArtist").textContent = photoTitle
+        ? "LAGU KENANGAN UNTUK: " + photoTitle
+        : "YOU, ME & WHAT'S NEXT. • OUR FAVORITES";
     document.getElementById("musicArt").classList.add("playing-art");
     audioPlayer.src = track.src;
     audioPlayer.load();
